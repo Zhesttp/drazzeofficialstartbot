@@ -30,10 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     {
                         id: 2,
-                        type: 'video',
+                        type: 'link',
                         title: "Старт в TON экосистеме",
                         description: "Установка TonKeeper, создание кошелька и начало работы с DRAZZE",
-                        content: "assets/videos/stage1/2-tonkeeper-guide.mp4"
+                        content: "https://disk.yandex.ru/i/bHa40fNu-o3f1g",
+                        external: true
                     },
                     // Пункт 3 изменён на ссылку
                     {
