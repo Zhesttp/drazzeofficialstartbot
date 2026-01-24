@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAZZE | Onboarding Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="particles-container"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-overlay"></div>
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="assets/images/logo-white.png" alt="DRAZZE" class="logo-image">
+            </div>
+            <div class="loading-progress">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressPercent">0</span>%
+                    </div>
+                </div>
+                <div class="loading-text">
+                    <span class="loading-dots"></span>
+                    <span class="loading-message">Загрузка платформы</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <div class="welcome-logo">
+                <img src="assets/images/logo-white.png" alt="DRAZZE" class="logo-image">
+            </div>
+            <div class="welcome-text">
+                <h1 class="glitch-text" data-text="ДОБРО ПОЖАЛОВАТЬ">ДОБРО ПОЖАЛОВАТЬ</h1>
+                <div class="welcome-subtitle">
+                    <span class="gradient-text">В экосистему будущего</span>
+                </div>
+                <p class="welcome-description">
+                    Пройди 4 этапа обучения и стань экспертом в мире блокчейн-бизнеса.
+                    От новичка до лидера всего за несколько шагов.
+                </p>
+            </div>
+            <button class="btn-start-pulse" id="startBtn">
+                <span class="btn-text">НАЧАТЬ ПУТЬ</span>
+                <div class="btn-glow"></div>
+                <div class="btn-pulse"></div>
+            </button>
+            <div class="welcome-stats">
+                <div class="stat">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Этапа</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Урока</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="btn-back" id="backBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="stage-indicator">
+                    <span class="stage-prefix">ЭТАП</span>
+                    <span class="stage-number" id="currentStageNum">1</span>
+                    <span class="stage-slash">/</span>
+                    <span class="stage-total">4</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="progress-dots">
+                    <div class="dot active" data-stage="1"></div>
+                    <div class="dot" data-stage="2"></div>
+                    <div class="dot" data-stage="3"></div>
+                    <div class="dot" data-stage="4"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Stage 1: Foundation -->
+            <div class="stage-screen active" id="stage1-main">
+                <div class="stage-header">
+                    <div class="stage-badge">FOUNDATION</div>
+                    <h2 class="stage-title">Начало (первые базовые моменты)</h2>
+                    <p class="stage-description">
+                        Освой фундаментальные знания о блокчейне, TON и платформе DRAZZE
+                    </p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="lesson-card" data-lesson="1">
+                        <div class="lesson-icon audio">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">01</div>
+                            <h3>Что такое DRAZZE простыми словами</h3>
+                            <p class="lesson-subtitle">Аудио-объяснение для новичков</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="2">
+                        <div class="lesson-icon video">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">02</div>
+                            <h3>Старт в TON экосистеме</h3>
+                            <p class="lesson-subtitle">Установка TonKeeper и начало работы</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="3">
+                        <div class="lesson-icon video">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">03</div>
+                            <h3>Механика заработка</h3>
+                            <p class="lesson-subtitle">Как можно зарабатывать в DRAZZE</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="4">
+                        <div class="lesson-icon video">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">04</div>
+                            <h3>Стейкинг и TON блокчейн</h3>
+                            <p class="lesson-subtitle">Принципы пассивного дохода (2 видео)</p> <!-- Добавили указание на 2 видео -->
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="5">
+                        <div class="lesson-icon link">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">05</div>
+                            <h3>Разбор проекта и монеты</h3>
+                            <p class="lesson-subtitle">Глубокий анализ токеномики</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-next-stage" id="nextStage1">
+                    <span>Перейти к активации</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="btn-shine"></div>
+                </button>
+            </div>
+
+            <!-- Stage 2: Activation -->
+            <div class="stage-screen" id="stage2-main">
+                <div class="stage-header">
+                    <div class="stage-badge">ACTIVATION</div>
+                    <h2 class="stage-title">Активация и закрытие возражений</h2>
+                    <p class="stage-description">
+                        Освой инструменты коммуникации и научись работать с возражениями
+                    </p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="lesson-card" data-lesson="1">
+                        <div class="lesson-icon audio">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">01</div>
+                            <h3>Чаты DRAZZE</h3>
+                            <p class="lesson-subtitle">Как работать в команде</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="2">
+                        <div class="lesson-icon audio">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">02</div>
+                            <h3>Наставник в бизнесе</h3>
+                            <p class="lesson-subtitle">Роль и возможности</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card expandable" data-lesson="3">
+                        <div class="lesson-icon audio">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">03</div>
+                            <h3>Блоки возражений</h3>
+                            <p class="lesson-subtitle">10 ключевых ответов</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <!-- Objections Sub-lessons (hidden by default) -->
+                    <div class="sub-lessons" id="objectionsList">
+                        <div class="sub-lesson-card" data-objection="1">
+                            <div class="sub-lesson-number">3.1</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Это пирамида"</h4>
+                                <p>Ответ на главное возражение</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="stage2/3-1-this-is-pyramid.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="2">
+                            <div class="sub-lesson-number">3.2</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Крипта — это не серьезно"</h4>
+                                <p>Докажи обратное</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="stage2/3-2-crypto-not-serious.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <!-- остальные возражения... -->
+                        <div class="sub-lesson-card" data-objection="10">
+                            <div class="sub-lesson-number">3.10</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Поздно заходить"</h4>
+                                <p>Почему сейчас идеальное время</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="stage2/3-10-too-late.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-next-stage" id="nextStage2">
+                    <span>К закрытию статуса</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="btn-shine"></div>
+                </button>
+            </div>
+
+            <!-- Stage 3: Agent Status -->
+            <div class="stage-screen" id="stage3-main">
+                <div class="stage-header">
+                    <div class="stage-badge">AGENT</div>
+                    <h2 class="stage-title">Закрытие статуса Agent</h2>
+                    <p class="stage-description">
+                        90% понимания построения сети заключается в этом этапе
+                    </p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="lesson-card" data-lesson="1">
+                        <div class="lesson-icon video">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">01</div>
+                            <h3>Закрытие статуса</h3>
+                            <p class="lesson-subtitle">Практическое видео</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="2">
+                        <div class="lesson-icon text">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">02</div>
+                            <h3>Скрипты первого сообщения</h3>
+                            <p class="lesson-subtitle">Полный гайд по коммуникации</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="3">
+                        <div class="lesson-icon audio">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">03</div>
+                            <h3>Как звать без впаривания</h3>
+                            <p class="lesson-subtitle">Естественный подход</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Audio Lessons 4-8 -->
+                    <div class="lesson-card" data-lesson="8">
+                        <div class="lesson-icon audio">
+                            <i class="fas fa-business-time"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">08</div>
+                            <h3>Бизнес-возможность</h3>
+                            <p class="lesson-subtitle">Почему это не просто крипта</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-next-stage" id="nextStage3">
+                    <span>К лидерскому уровню</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="btn-shine"></div>
+                </button>
+            </div>
+
+            <!-- Stage 4: Leadership -->
+            <div class="stage-screen" id="stage4-main">
+                <div class="stage-header">
+                    <div class="stage-badge">LEADERSHIP</div>
+                    <h2 class="stage-title">Лидерский уровень (3 по 3)</h2>
+                    <p class="stage-description">
+                        Как выйти на доход от 600$ в неделю на статусе Commander
+                    </p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="lesson-card" data-lesson="1">
+                        <div class="lesson-icon video">
+                            <i class="fas fa-money-check-alt"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">01</div>
+                            <h3>Доход от 600$ в неделю</h3>
+                            <p class="lesson-subtitle">Стратегия заработка</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="2">
+                        <div class="lesson-icon text">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">02</div>
+                            <h3>Масштабирование бизнеса</h3>
+                            <p class="lesson-subtitle">Построение команды лидеров</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-next-stage" id="nextStage4">
+                    <span>Завершить обучение</span>
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="btn-shine"></div>
+                </button>
+            </div>
+
+            <!-- Lesson Detail Screens -->
+            <div class="lesson-detail-screen" id="lessonDetail">
+                <div class="lesson-header">
+                    <div class="lesson-type-badge" id="lessonTypeBadge">
+                        <i class="fas fa-headphones"></i>
+                        <span>АУДИО</span>
+                    </div>
+                    <h2 class="lesson-title" id="lessonTitle">Название урока</h2>
+                    <p class="lesson-description" id="lessonDescription">Описание урока</p>
+                </div>
+
+                <div class="lesson-content-area">
+                    <!-- Audio Player -->
+                    <div class="audio-player" id="audioPlayerContainer">
+                        <div class="audio-wave">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        <div class="audio-controls">
+                            <button class="audio-btn" id="playPauseBtn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="audio-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                                <div class="audio-time">
+                                    <span class="current-time">0:00</span>
+                                    <span class="duration">0:00</span>
+                                </div>
+                            </div>
+                            <button class="audio-btn" id="volumeBtn">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Player -->
+                    <div class="video-player" id="videoPlayerContainer">
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <p>Нажмите для воспроизведения видео</p>
+                        </div>
+                    </div>
+
+                    <!-- Text Content -->
+                    <div class="text-content" id="textContentContainer">
+                        <div class="text-scroll">
+                            <!-- Контент будет загружен динамически -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-footer">
+                    <button class="btn-back-lesson">
+                        <i class="fas fa-chevron-left"></i>
+                        <span>Назад к урокам</span>
+                    </button>
+                    <div class="lesson-navigation">
+                        <button class="nav-btn prev-lesson">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <span class="nav-info" id="navInfo">1/8</span>
+                        <button class="nav-btn next-lesson">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completion Screen -->
+            <div class="completion-screen" id="completionScreen">
+                <div class="completion-content">
+                    <div class="completion-animation">
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="completion-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                    </div>
+                    <h2 class="completion-title">Миссия выполнена!</h2>
+                    <p class="completion-text">
+                        Ты прошел все 4 этапа обучения DRAZZE. Теперь ты готов строить свой бизнес в блокчейн-индустрии.
+                    </p>
+                    
+                    <div class="completion-stats">
+                        <div class="completion-stat">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">урока освоено</div>
+                        </div>
+                        <div class="completion-stat">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">этапа завершено</div>
+                        </div>
+                        <div class="completion-stat">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">готовность</div>
+                        </div>
+                    </div>
+
+                    <div class="completion-badges">
+                        <div class="badge">
+                            <i class="fas fa-gem"></i>
+                            <span>Foundation</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Activation</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-flag"></i>
+                            <span>Agent</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-crown"></i>
+                            <span>Leadership</span>
+                        </div>
+                    </div>
+
+                    <div class="completion-actions">
+                        <button class="btn-start-earning" id="startEarningBtn">
+                            <i class="fas fa-rocket"></i>
+                            <span>Начать зарабатывать</span>
+                        </button>
+                        <button class="btn-review" id="reviewBtn">
+                            <i class="fas fa-redo"></i>
+                            <span>Повторить обучение</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Audio Element -->
+        <audio id="audioElement" preload="metadata">
+            <source src="" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
