@@ -35,28 +35,31 @@ document.addEventListener('DOMContentLoaded', function() {
                         description: "Установка TonKeeper, создание кошелька и начало работы с DRAZZE",
                         content: "assets/videos/stage1/2-tonkeeper-guide.mp4"
                     },
+                    // Пункт 3 изменён на ссылку
                     {
                         id: 3,
-                        type: 'video',
+                        type: 'link',
                         title: "Механика заработка",
                         description: "Как можно зарабатывать в DRAZZE - полный обзор",
-                        content: "assets/videos/stage1/3-earn-in-drazze.mp4"
+                        content: "https://disk.yandex.ru/i/BxcAfBRqf-tKYQ",
+                        external: true
                     },
+                    // Пункт 4 изменён на ссылку
                     {
                         id: 4,
-                        type: 'video',
-                        title: "Стейкинг и TON блокчейн",
-                        description: "Принципы пассивного дохода через стейкинг (2 видео)",
-                        content: "assets/videos/stage1/4-staking-ton-part1.mp4",
-                        content2: "assets/videos/stage1/4-staking-ton-part2.mp4",
-                        isDoubleVideo: true
+                        type: 'link',
+                        title: "Стейкинг и TON блокчейн (Часть 1)",
+                        description: "Принципы пассивного дохода через стейкинг - первая часть",
+                        content: "https://disk.yandex.ru/i/L-Fz_tARpC2MTw",
+                        external: true
                     },
+                    // Пункт 5 изменён на ссылку
                     {
                         id: 5,
                         type: 'link',
-                        title: "Разбор проекта и монеты",
-                        description: "Глубокий анализ токеномики и проекта",
-                        content: "https://www.youtube.com/watch?si=fks86ho5I0aa2fxf&v=0aL1Pd0BpS4&feature=youtu.be",
+                        title: "Стейкинг и TON блокчейн (Часть 2)",
+                        description: "Принципы пассивного дохода через стейкинг - вторая часть",
+                        content: "https://disk.yandex.ru/i/ficIkpTXHYQ26g",
                         external: true
                     }
                 ]
@@ -103,10 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 lessons: [
                     {
                         id: 1,
-                        type: 'video',
+                        type: 'link',
                         title: "Закрытие статуса",
                         description: "Практическое видео по закрытию статуса Agent",
-                        content: "assets/videos/stage3/1-close-agent-status.mp4"
+                        content: "https://disk.yandex.ru/i/z_wpYsiQ_sYvUQ",
+                        external: true
                     },
                     {
                         id: 2,
@@ -249,17 +253,26 @@ document.addEventListener('DOMContentLoaded', function() {
             4: {
                 title: "Лидерский уровень (3 по 3)",
                 lessons: [
+                    // Пункт 1.1
                     {
                         id: 1,
-                        type: 'video',
-                        title: "Доход от 600$ в неделю",
-                        description: "Стратегия заработка на статусе Commander. Как масштабировать свой бизнес и что важно про построении своей команды",
-                        content: "assets/videos/stage4/1-600-per-week.mp4",
-                        content2: "assets/videos/stage4/1-600-per-week2.mp4",
-                        isDoubleVideo: true
+                        type: 'link',
+                        title: "Доход от 600$ в неделю (Часть 1)",
+                        description: "Стратегия заработка на статусе Commander. Часть 1",
+                        content: "https://disk.yandex.ru/i/kH7dVUc8_Sz8Qg",
+                        external: true
                     },
+                    // Пункт 1.2
                     {
                         id: 2,
+                        type: 'link',
+                        title: "Доход от 600$ в неделю (Часть 2)",
+                        description: "Стратегия заработка на статусе Commander. Часть 2",
+                        content: "https://disk.yandex.ru/i/ognjyZrKkYx7PA",
+                        external: true
+                    },
+                    {
+                        id: 3,
                         type: 'text',
                         title: "Масштабирование бизнеса",
                         description: "Построение команды лидеров",

@@ -46,6 +46,12 @@
     box-sizing: border-box;
 }
 
+html {
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+    touch-action: pan-y pinch-zoom;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: var(--darker);
@@ -53,6 +59,11 @@ body {
     overflow: hidden;
     height: 100vh;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    touch-action: pan-y;
 }
 
 /* Анимированный фон */
