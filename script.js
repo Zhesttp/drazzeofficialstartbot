@@ -21,42 +21,36 @@ document.addEventListener('DOMContentLoaded', function() {
             1: {
                 title: "Начало (первые базовые моменты)",
                 lessons: [
+                    // Пункт 1: Старт в TON экосистеме
                     {
                         id: 1,
-                        type: 'audio',
-                        title: "Что такое DRAZZE простыми словами",
-                        description: "Аудио-объяснение основ платформы для новичков",
-                        content: "assets/audio/stage1/1-what-is-drazze.mp3"
-                    },
-                    {
-                        id: 2,
                         type: 'link',
                         title: "Старт в TON экосистеме",
                         description: "Установка TonKeeper, создание кошелька и начало работы с DRAZZE",
                         content: "https://disk.yandex.ru/i/bHa40fNu-o3f1g",
                         external: true
                     },
-                    // Пункт 3 изменён на ссылку
+                    // Пункт 2: Механика заработка
                     {
-                        id: 3,
+                        id: 2,
                         type: 'link',
                         title: "Механика заработка",
                         description: "Как можно зарабатывать в DRAZZE - полный обзор",
                         content: "https://disk.yandex.ru/i/BxcAfBRqf-tKYQ",
                         external: true
                     },
-                    // Пункт 4 изменён на ссылку
+                    // Пункт 3: Стейкинг и TON блокчейн (Часть 1)
                     {
-                        id: 4,
+                        id: 3,
                         type: 'link',
                         title: "Стейкинг и TON блокчейн (Часть 1)",
                         description: "Принципы пассивного дохода через стейкинг - первая часть",
                         content: "https://disk.yandex.ru/i/L-Fz_tARpC2MTw",
                         external: true
                     },
-                    // Пункт 5 изменён на ссылку
+                    // Пункт 4: Стейкинг и TON блокчейн (Часть 2)
                     {
-                        id: 5,
+                        id: 4,
                         type: 'link',
                         title: "Стейкинг и TON блокчейн (Часть 2)",
                         description: "Принципы пассивного дохода через стейкинг - вторая часть",
@@ -574,7 +568,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Reset objections
-        document.getElementById('objectionsList').classList.remove('active');
+        const objectionsList = document.getElementById('objectionsList');
+        if (objectionsList) {
+            objectionsList.classList.remove('active');
+        }
     }
     
     function updateBackButton() {
