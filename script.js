@@ -490,6 +490,50 @@ document.addEventListener('DOMContentLoaded', function() {
         // Objections expandable
         setupObjections();
         
+        // Setup audio buttons for objections in the stage screen
+        setupAudioButtons();
+        
+        function setupAudioButtons() {
+            // Обработчик для кнопок воспроизведения аудио в под-уроках
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-play-audio')) {
+                    const button = e.target.closest('.btn-play-audio');
+                    const audioSrc = button.dataset.audio;
+                    
+                    if (!audioSrc) return;
+                    
+                    // Получаем заголовок из ближайшей карточки
+                    const card = button.closest('.sub-lesson-card');
+                    let title = "Возражение";
+                    if (card) {
+                        const titleElement = card.querySelector('h4');
+                        if (titleElement) {
+                            title = titleElement.textContent;
+                        }
+                    }
+                    
+                    e.stopPropagation();
+                    
+                    // Если это та же кнопка и аудио играет, остановить
+                    if (currentAudioButton === button && isAudioPlaying) {
+                        stopAllAudio();
+                        return;
+                    }
+                    
+                    // Остановить предыдущее аудио
+                    stopAllAudio();
+                    
+                    // Изменить иконку кнопки
+                    const icon = button.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-pause';
+                    }
+                    
+                    // Запустить новое аудио
+                    playAudio(audioSrc, button, null, title);
+                }
+            });
+        }
         // Lesson navigation
         setupLessonNavigation();
         
@@ -502,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize particles
         createParticles();
-    }
+    }    
     
     function simulateLoading() {
         let progress = 0;
@@ -593,12 +637,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setupLessonCards() {
-        document.querySelectorAll('.lesson-card').forEach(card => {
-            card.addEventListener('click', function() {
+        // Находим все карточки уроков на всех этапах
+        document.querySelectorAll('.lesson-card:not(.expandable)').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (this.classList.contains('expandable')) {
+                    // Если карточка раскрываемая, не открываем урок
+                    return;
+                }
                 const stage = appState.currentStage;
                 const lessonId = parseInt(this.dataset.lesson);
                 openLesson(stage, lessonId);
             });
+            
+            // Добавляем обработчик для touch устройств
+            card.addEventListener('touchstart', function() {
+                this.classList.add('touching');
+            }, { passive: true });
+            
+            card.addEventListener('touchend', function() {
+                this.classList.remove('touching');
+            }, { passive: true });
         });
     }
     
@@ -902,10 +960,10 @@ document.addEventListener('DOMContentLoaded', function() {
             lesson.objections.forEach(obj => {
                 contentHTML += `
                     <div class="objection-item" style="margin-bottom: 15px; padding: 15px; background: rgba(30, 41, 59, 0.3); border-radius: 10px;">
-                        <h4 style="margin-bottom: 10px;">${obj.id}. ${obj.title}</h4>
+                        <h4 style="margin-bottom: 10px; color: var(--light);">${obj.id}. ${obj.title}</h4>
                         <div style="display: flex; align-items: center; justify-content: space-between;">
                             <span class="objection-duration" style="color: var(--gray); font-size: 0.9em;">--:--</span>
-                            <button class="btn-play-audio" 
+                            <button class="objection-play-btn" 
                                     style="background: rgba(124, 58, 237, 0.2); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); cursor: pointer;"
                                     data-audio="${obj.audio}"
                                     data-title="${obj.title}">
@@ -926,11 +984,12 @@ document.addEventListener('DOMContentLoaded', function() {
         objectionsContainer.style.display = 'block';
         
         // Setup audio buttons for objections
-        document.querySelectorAll('.btn-play-audio').forEach(btn => {
+        document.querySelectorAll('.objection-play-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const audioSrc = this.dataset.audio;
                 const title = this.dataset.title;
+                const icon = this.querySelector('i');
                 
                 // Если это та же кнопка и аудио играет, остановить
                 if (currentAudioButton === this && isAudioPlaying) {
@@ -952,6 +1011,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 tempAudio.load();
                 
+                // Изменить иконку кнопки
+                icon.className = 'fas fa-pause';
+                this.style.background = 'rgba(255, 0, 110, 0.2)';
+                this.style.color = 'var(--secondary-light)';
+                
                 // Запустить новое аудио
                 playAudio(audioSrc, this, null, title);
             });
@@ -972,11 +1036,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Обновить состояние кнопки
         if (button) {
-            button.classList.add('playing');
-            button.innerHTML = '<i class="fas fa-pause"></i>';
+            if (button.classList.contains('objection-play-btn') || button.classList.contains('btn-play-audio')) {
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-pause';
+                }
+                button.style.background = 'rgba(255, 0, 110, 0.2)';
+                button.style.color = 'var(--secondary-light)';
+            } else {
+                button.classList.add('playing');
+                button.innerHTML = '<i class="fas fa-pause"></i>';
+            }
             currentAudioButton = button;
         }
         
+        // Обновить состояние основной кнопки play/pause
         if (playPauseBtn) {
             playPauseBtn.classList.add('playing');
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -995,12 +1069,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }).catch(error => {
             console.error('Error playing audio:', error);
-            if (tg && tg.showAlert) {
-                tg.showAlert(`Ошибка воспроизведения аудио: ${error.message}`);
-            }
+            // Сбросить кнопки при ошибке
             stopAllAudio();
         });
-    }
+    }    
     
     function pauseCurrentAudio() {
         if (currentAudio) {
@@ -1044,14 +1116,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (currentAudioButton) {
-            currentAudioButton.classList.remove('playing');
-            currentAudioButton.innerHTML = '<i class="fas fa-play"></i>';
+            // Проверить, является ли это кнопкой objection
+            if (currentAudioButton.classList.contains('objection-play-btn')) {
+                const icon = currentAudioButton.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-play';
+                }
+                currentAudioButton.style.background = 'rgba(124, 58, 237, 0.2)';
+                currentAudioButton.style.color = 'var(--primary)';
+            } else {
+                currentAudioButton.classList.remove('playing');
+                currentAudioButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
         }
         
-        // Сбросить все кнопки воспроизведения в интерфейсе
-        document.querySelectorAll('.btn-play-audio').forEach(btn => {
-            btn.classList.remove('playing');
-            btn.innerHTML = '<i class="fas fa-play"></i>';
+        // Сбросить все кнопки воспроизведения в интерфейсе objections
+        document.querySelectorAll('.objection-play-btn').forEach(btn => {
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-play';
+            }
+            btn.style.background = 'rgba(124, 58, 237, 0.2)';
+            btn.style.color = 'var(--primary)';
         });
         
         // Остановить анимацию волн
@@ -1202,6 +1288,62 @@ document.addEventListener('DOMContentLoaded', function() {
         goToStage(1);
         tg.showAlert('Обучение начато заново! Удачи!');
     }
+    function stopAllAudio() {
+        const audioElement = document.getElementById('audioElement');
+        if (audioElement) {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+        }
+        
+        if (currentAudio) {
+            isAudioPlaying = false;
+            currentAudio = null;
+        }
+        
+        // Сбросить все кнопки воспроизведения
+        if (currentPlayPauseBtn) {
+            currentPlayPauseBtn.classList.remove('playing');
+            currentPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+        
+        // Сбросить все кнопки .btn-play-audio и .objection-play-btn
+        document.querySelectorAll('.btn-play-audio, .objection-play-btn').forEach(btn => {
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-play';
+            }
+            btn.style.background = 'rgba(124, 58, 237, 0.2)';
+            btn.style.color = 'var(--primary)';
+            
+            // Убрать класс playing если есть
+            btn.classList.remove('playing');
+        });
+        
+        if (currentAudioButton) {
+            // Проверить, является ли это кнопкой objection
+            if (currentAudioButton.classList.contains('objection-play-btn') || currentAudioButton.classList.contains('btn-play-audio')) {
+                const icon = currentAudioButton.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-play';
+                }
+                currentAudioButton.style.background = 'rgba(124, 58, 237, 0.2)';
+                currentAudioButton.style.color = 'var(--primary)';
+            } else {
+                currentAudioButton.classList.remove('playing');
+                currentAudioButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+        
+        // Остановить анимацию волн
+        const waveBars = document.querySelectorAll('.wave-bar');
+        waveBars.forEach(bar => {
+            bar.style.animationPlayState = 'paused';
+            bar.style.height = '20px';
+        });
+        
+        currentAudioButton = null;
+        currentPlayPauseBtn = null;
+    }
     
     function handleBack() {
         // Остановить аудио при нажатии кнопки "Назад"
@@ -1273,7 +1415,25 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.head.appendChild(style);
     }
-    
+    function showCompletionScreen() {
+        // Скрыть все остальные экраны
+        document.querySelectorAll('.stage-screen, .lesson-detail-screen').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        
+        // Показать окно завершения
+        const completionScreen = document.getElementById('completionScreen');
+        completionScreen.classList.add('active');
+        
+        // Прокрутить вверх окно завершения
+        completionScreen.scrollTop = 0;
+        
+        // Обновить заголовок Telegram Web App
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.setHeaderColor('#0a0a1a');
+            window.Telegram.WebApp.MainButton.hide();
+        }
+    }
     // Initialize Telegram
     tg.ready();
 });

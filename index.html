@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DRAZZE | Onboarding Guide</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,8 +14,11 @@
 </head>
 <body>
     <!-- Animated Background -->
-    <div class="animated-bg"></div>
-    <div class="particles-container"></div>
+    <div class="cosmic-bg"></div>
+    <div class="planet planet-1"></div>
+    <div class="planet planet-2"></div>
+    <div class="space-dust" id="spaceDust"></div>
+    <div class="grid-effect"></div>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -71,8 +74,6 @@
                     <div class="stat-number">19</div>
                     <div class="stat-label">Уроков</div>
                 </div>
-            </div>
-
             </div>
         </div>
     </div>
@@ -130,7 +131,7 @@
                     </div>
 
                     <div class="lesson-card" data-lesson="2">
-                        <div class="lesson-icon video">
+                        <div class="lesson-icon link">
                             <i class="fas fa-coins"></i>
                         </div>
                         <div class="lesson-content">
@@ -144,7 +145,7 @@
                     </div>
 
                     <div class="lesson-card" data-lesson="3">
-                        <div class="lesson-icon video">
+                        <div class="lesson-icon link">
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="lesson-content">
@@ -240,7 +241,7 @@
                                 <h4>"Это пирамида"</h4>
                                 <p>Ответ на главное возражение</p>
                             </div>
-                            <button class="btn-play-audio" data-audio="stage2/3-1-this-is-pyramid.mp3">
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-1-this-is-pyramid.mp3">
                                 <i class="fas fa-play"></i>
                             </button>
                         </div>
@@ -250,18 +251,87 @@
                                 <h4>"Крипта — это не серьезно"</h4>
                                 <p>Докажи обратное</p>
                             </div>
-                            <button class="btn-play-audio" data-audio="stage2/3-2-crypto-not-serious.mp3">
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-2-crypto-not-serious.mp3">
                                 <i class="fas fa-play"></i>
                             </button>
                         </div>
-                        <!-- остальные возражения... -->
+                        <div class="sub-lesson-card" data-objection="3">
+                            <div class="sub-lesson-number">3.3</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Моему окружению это не интересно"</h4>
+                                <p>Как найти свою аудиторию</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-3-not-interesting.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="4">
+                            <div class="sub-lesson-number">3.4</div>
+                            <div class="sub-lesson-content">
+                                <h4>"У меня нет денег"</h4>
+                                <p>Работа с финансовыми возражениями</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-4-no-money.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="5">
+                            <div class="sub-lesson-number">3.5</div>
+                            <div class="sub-lesson-content">
+                                <h4>"У меня нет времени"</h4>
+                                <p>Управление временем в бизнесе</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-5-no-time.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="6">
+                            <div class="sub-lesson-number">3.6</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Я не умею приглашать"</h4>
+                                <p>Обучение навыкам приглашения</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-6-cant-invite.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="7">
+                            <div class="sub-lesson-number">3.7</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Это слишком рискованно"</h4>
+                                <p>Работа со страхами</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-7-too-risky.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="8">
+                            <div class="sub-lesson-number">3.8</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Зарабатывает только верхушка"</h4>
+                                <p>Разрушение мифа</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-8-only-top-earns.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="sub-lesson-card" data-objection="9">
+                            <div class="sub-lesson-number">3.9</div>
+                            <div class="sub-lesson-content">
+                                <h4>"Я не доверяю команде / основателям"</h4>
+                                <p>Построение доверия</p>
+                            </div>
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-9-dont-trust-team.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
                         <div class="sub-lesson-card" data-objection="10">
                             <div class="sub-lesson-number">3.10</div>
                             <div class="sub-lesson-content">
                                 <h4>"Поздно заходить"</h4>
                                 <p>Почему сейчас идеальное время</p>
                             </div>
-                            <button class="btn-play-audio" data-audio="stage2/3-10-too-late.mp3">
+                            <button class="btn-play-audio" data-audio="assets/audio/stage2/3-10-too-late.mp3">
                                 <i class="fas fa-play"></i>
                             </button>
                         </div>
@@ -276,7 +346,6 @@
             </div>
 
             <!-- Stage 3: Agent Status -->
-<!-- Stage 3: Agent Status -->
             <div class="stage-screen" id="stage3-main">
                 <div class="stage-header">
                     <div class="stage-badge">AGENT</div>
@@ -288,7 +357,7 @@
                 
                 <div class="content-grid">
                     <div class="lesson-card" data-lesson="1">
-                        <div class="lesson-icon video">
+                        <div class="lesson-icon link">
                             <i class="fas fa-flag-checkered"></i>
                         </div>
                         <div class="lesson-content">
@@ -424,13 +493,13 @@
                 
                 <div class="content-grid">
                     <div class="lesson-card" data-lesson="1">
-                        <div class="lesson-icon video">
+                        <div class="lesson-icon link">
                             <i class="fas fa-money-check-alt"></i>
                         </div>
                         <div class="lesson-content">
                             <div class="lesson-number">01</div>
-                            <h3>Доход от 600$ в неделю</h3>
-                            <p class="lesson-subtitle">Стратегия заработка</p>
+                            <h3>Доход от 600$ в неделю (Часть 1)</h3>
+                            <p class="lesson-subtitle">Стратегия заработка. Часть 1</p>
                         </div>
                         <div class="lesson-action">
                             <i class="fas fa-chevron-right"></i>
@@ -438,11 +507,25 @@
                     </div>
 
                     <div class="lesson-card" data-lesson="2">
+                        <div class="lesson-icon link">
+                            <i class="fas fa-money-check-alt"></i>
+                        </div>
+                        <div class="lesson-content">
+                            <div class="lesson-number">02</div>
+                            <h3>Доход от 600$ в неделю (Часть 2)</h3>
+                            <p class="lesson-subtitle">Стратегия заработка. Часть 2</p>
+                        </div>
+                        <div class="lesson-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-lesson="3">
                         <div class="lesson-icon text">
                             <i class="fas fa-network-wired"></i>
                         </div>
                         <div class="lesson-content">
-                            <div class="lesson-number">02</div>
+                            <div class="lesson-number">03</div>
                             <h3>Масштабирование бизнеса</h3>
                             <p class="lesson-subtitle">Построение команды лидеров</p>
                         </div>
@@ -540,6 +623,8 @@
                         <div class="confetti"></div>
                         <div class="confetti"></div>
                         <div class="confetti"></div>
+                        <div class="confetti"></div>
+                        <div class="confetti"></div>
                         <div class="completion-icon">
                             <i class="fas fa-trophy"></i>
                         </div>
@@ -577,7 +662,8 @@
                             <i class="fas fa-flag"></i>
                             <span>Agent</span>
                         </div>
-                        <div class="badge">
+                        <!-- Последний бейдж без эффекта рамки/свечения -->
+                        <div class="badge completed-badge">
                             <i class="fas fa-crown"></i>
                             <span>Leadership</span>
                         </div>
