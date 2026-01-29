@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type: 'link',
                         title: "Механика заработка",
                         description: "Как можно зарабатывать в DRAZZE - полный обзор",
-                        content: "https://disk.yandex.ru/i/BxcAfBRqf-tKYQ",
+                        content: "https://disk.yandex.ru/i/umqiADM9o7SVbA",
                         external: true
                     },
                     // Пункт 3: Стейкинг и TON блокчейн (Часть 1)
