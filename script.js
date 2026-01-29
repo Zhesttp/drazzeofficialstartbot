@@ -261,8 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         id: 2,
                         type: 'link',
-                        title: "Доход от 600$ в неделю (Часть 2)",
-                        description: "Стратегия заработка на статусе Commander. Часть 2",
+                        title: "Как маштабировать свой бизнес",
+                        description: "И что важно при построении своей команды",
                         content: "https://disk.yandex.ru/i/ognjyZrKkYx7PA",
                         external: true
                     },
