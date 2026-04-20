@@ -56,7 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         { id: 6, title: "«Не умею пользоваться криптой, карты заблокированы…»", audio: "assets/audio/objections/06-crypto-blocked-cards.mp3" },
                         { id: 7, title: "«Зарабатывает только верхушка»", audio: "assets/audio/objections/07-only-top-earns.mp3" },
                         { id: 8, title: "«Цена монеты может упасть»", audio: "assets/audio/objections/08-coin-price-may-drop.mp3" },
-                        { id: 9, title: "«Какие гарантии, а если токен просядет»", audio: "assets/audio/objections/09-guarantees-token-drop.mp3" }
+                        { id: 9, title: "«Какие гарантии, а если токен просядет»", audio: "assets/audio/objections/09-guarantees-token-drop.mp3" },
+                        { id: 10, title: "Это пирамида", audio: "assets/audio/stage2/3-1-this-is-pyramid.mp3" },
+                        { id: 11, title: "Крипта — это не серьезно", audio: "assets/audio/stage2/3-2-crypto-not-serious.mp3" },
+                        { id: 12, title: "Моему окружению это не интересно", audio: "assets/audio/stage2/3-3-not-interesting.mp3" },
+                        { id: 13, title: "У меня нет денег", audio: "assets/audio/stage2/3-4-no-money.mp3" },
+                        { id: 14, title: "У меня нет времени", audio: "assets/audio/stage2/3-5-no-time.mp3" },
+                        { id: 15, title: "Я не умею приглавать", audio: "assets/audio/stage2/3-6-cant-invite.mp3" },
+                        { id: 16, title: "Это слишком рискованно", audio: "assets/audio/stage2/3-7-too-risky.mp3" },
+                        { id: 17, title: "Зарабатывает только верхушка", audio: "assets/audio/stage2/3-8-only-top-earns.mp3" },
+                        { id: 18, title: "Я не доверяю команде / основателям", audio: "assets/audio/stage2/3-9-dont-trust-team.mp3" },
+                        { id: 19, title: "Поздно заходить, я уже опоздал", audio: "assets/audio/stage2/3-10-too-late.mp3" }
                     ] },
                     { id: 6, type: 'technical', title: "Технические вопросы", description: "Стейкинг, контракт, ликвидность и выплаты", objections: [
                         { id: 1, title: "Как технически работает стейкинг?", audio: "assets/audio/technical/01-how-staking-works.mp3" },
