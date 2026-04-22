@@ -1646,29 +1646,29 @@ body {
 /* Completion Screen */
 .completion-screen {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 1rem;
+    padding: clamp(0.5rem, 2.5vw, 1.5rem);
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .completion-content {
     text-align: center;
-    max-width: 500px;
-    width: calc(100% - 2rem);
+    width: 100%;
+    max-width: none;
     position: relative;
     z-index: 1;
-    padding: 1rem;
-    background: rgba(10, 10, 26, 0.9);
+    padding: clamp(1rem, 3vw, 2rem);
+    background: transparent;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(157, 78, 221, 0.3);
-    backdrop-filter: blur(20px);
-    margin: 0.5rem;
-    max-height: 90vh;
-    overflow-y: auto;
+    border: 1px solid rgba(157, 78, 221, 0.18);
+    backdrop-filter: none;
+    margin: 0;
     box-sizing: border-box;
 }
 
