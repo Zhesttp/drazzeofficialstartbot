@@ -1152,6 +1152,7 @@ body {
     mask-composite: exclude;
     -webkit-mask-composite: xor;
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .audio-wave {
@@ -1241,11 +1242,13 @@ body {
 }
 
 .audio-progress .progress-bar {
-    height: 6px;
+    height: 10px;
     background: rgba(157, 78, 221, 0.1);
     border-radius: var(--radius-full);
     overflow: hidden;
     border: 1px solid rgba(157, 78, 221, 0.3);
+    cursor: pointer;
+    touch-action: none;
 }
 
 .audio-progress .progress-fill {
@@ -1266,6 +1269,7 @@ body {
     bottom: 0;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
     animation: progress-shine 2s infinite;
+    pointer-events: none;
 }
 
 @keyframes progress-shine {

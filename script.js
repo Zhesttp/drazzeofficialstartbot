@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentPlayPauseBtn = null;
     let volumeLevel = 1.0;
     let isMuted = false;
+    const AUDIO_PROGRESS_KEY = 'drazzeAudioProgressV1';
     
     // App State
     const appState = {
@@ -45,9 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 lessons: [
                     { id: 1, type: 'audio', title: "Обучение сетевому бизнесу / рекрутинг / база", description: "Тренинг Влада", content: "assets/audio/new/11-network-business-recruiting-base.mp3" },
                     { id: 2, type: 'audio', title: "Отказы в продажах", description: "Тренинг Влада по работе с отказами", content: "assets/audio/new/12-sales-objections.mp3" },
-                    { id: 3, type: 'audio', title: "Система чатов в DRZ", description: "Как правильно и эффективно пользоваться чатами", content: "assets/audio/audio2/01-drazze-chats.mp3" },
-                    { id: 4, type: 'audio', title: "Роль наставника в бизнесе", description: "Зачем нужен наставник и как с ним работать", content: "assets/audio/audio2/02-business-mentor.mp3" },
-                    { id: 5, type: 'objections', title: "Блоки возражений", description: "Ответы в аудио на типовые возражения", objections: [
+                    { id: 3, type: 'audio', title: "Новички сливаются", description: "Тренинг от Влада", content: "assets/audio/Новички сливаются (online-audio-converter.com).mp3" },
+                    { id: 4, type: 'audio', title: "Система чатов в DRZ", description: "Как правильно и эффективно пользоваться чатами", content: "assets/audio/audio2/01-drazze-chats.mp3" },
+                    { id: 5, type: 'audio', title: "Роль наставника в бизнесе", description: "Зачем нужен наставник и как с ним работать", content: "assets/audio/audio2/02-business-mentor.mp3" },
+                    { id: 6, type: 'objections', title: "Блоки возражений", description: "Ответы в аудио на типовые возражения", objections: [
                         { id: 1, title: "«Нужно звать людей, у меня нет людей»", audio: "assets/audio/objections/01-need-people-no-people.mp3" },
                         { id: 2, title: "«Боюсь на большие суммы приглашать людей…»", audio: "assets/audio/objections/02-afraid-big-sums-responsibility.mp3" },
                         { id: 3, title: "«В моём окружении нет сетевиков, где искать людей»", audio: "assets/audio/objections/03-no-networkers-in-circle.mp3" },
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         { id: 18, title: "Я не доверяю команде / основателям", audio: "assets/audio/stage2/3-9-dont-trust-team.mp3" },
                         { id: 19, title: "Поздно заходить, я уже опоздал", audio: "assets/audio/stage2/3-10-too-late.mp3" }
                     ] },
-                    { id: 6, type: 'technical', title: "Технические вопросы", description: "Стейкинг, контракт, ликвидность и выплаты", objections: [
+                    { id: 7, type: 'technical', title: "Технические вопросы", description: "Стейкинг, контракт, ликвидность и выплаты", objections: [
                         { id: 1, title: "Как технически работает стейкинг?", audio: "assets/audio/technical/01-how-staking-works.mp3" },
                         { id: 2, title: "Как работает механизм зачисления со стейкинга", audio: "assets/audio/technical/02-claim-crediting.mp3" },
                         { id: 3, title: "Куда отправляются монеты", audio: "assets/audio/technical/03-where-coins-sent.mp3" },
@@ -260,6 +262,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Handle Telegram back button
         tg.onEvent('backButtonClicked', handleBack);
+
+        // Сохраняем позицию плеера, если приложение свернули/закрыли
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                persistCurrentAudioState();
+            }
+        });
+        window.addEventListener('pagehide', persistCurrentAudioState);
+        window.addEventListener('beforeunload', persistCurrentAudioState);
         
         // Initialize particles
         createParticles();
@@ -549,6 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const waveBars = document.querySelectorAll('.wave-bar');
         const currentTimeEl = document.querySelector('.current-time');
         const durationEl = document.querySelector('.duration');
+        const progressBar = document.querySelector('.audio-progress .progress-bar');
         const progressFill = document.querySelector('.audio-progress .progress-fill');
         const audioElement = document.getElementById('audioElement');
         
@@ -567,25 +579,33 @@ document.addEventListener('DOMContentLoaded', function() {
         audioElement.load();
         
         // Wait for metadata to load
-        audioElement.addEventListener('loadedmetadata', function() {
+        audioElement.onloadedmetadata = function() {
             const duration = audioElement.duration;
             durationEl.textContent = formatTime(duration);
-            currentTimeEl.textContent = '0:00';
-        });
+            const savedProgress = getSavedAudioProgress(lesson.content);
+            if (savedProgress > 0 && savedProgress < duration) {
+                audioElement.currentTime = savedProgress;
+                currentTimeEl.textContent = formatTime(savedProgress);
+                progressFill.style.width = `${(savedProgress / duration) * 100}%`;
+            } else {
+                currentTimeEl.textContent = '0:00';
+            }
+        };
         
         // Update progress while playing
-        audioElement.addEventListener('timeupdate', function() {
+        audioElement.ontimeupdate = function() {
             if (audioElement.duration) {
                 const progress = (audioElement.currentTime / audioElement.duration) * 100;
                 progressFill.style.width = `${progress}%`;
                 currentTimeEl.textContent = formatTime(audioElement.currentTime);
             }
-        });
+        };
         
         // Handle audio end
-        audioElement.addEventListener('ended', function() {
-            stopAllAudio();
-        });
+        audioElement.onended = function() {
+            clearSavedAudioProgress(lesson.content);
+            stopAllAudio({ resetProgress: true });
+        };
         
         // Setup play/pause functionality
         playPauseBtn.onclick = function() {
@@ -606,10 +626,71 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             updateVolumeButton();
         }
+
+        // Перемотка по прогресс-бару (click/touch/pointer для Telegram WebView)
+        if (progressBar) {
+            let isSeeking = false;
+
+            const seekToPosition = function(clientX) {
+                if (!audioElement.duration || !isFinite(audioElement.duration)) return;
+                const rect = progressBar.getBoundingClientRect();
+                const clickX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+                const ratio = rect.width > 0 ? (clickX / rect.width) : 0;
+                audioElement.currentTime = ratio * audioElement.duration;
+                progressFill.style.width = `${ratio * 100}%`;
+                currentTimeEl.textContent = formatTime(audioElement.currentTime);
+                saveAudioProgress(lesson.content, audioElement.currentTime);
+            };
+
+            progressBar.onclick = function(e) {
+                seekToPosition(e.clientX);
+            };
+
+            progressBar.onpointerdown = function(e) {
+                isSeeking = true;
+                seekToPosition(e.clientX);
+                progressBar.setPointerCapture?.(e.pointerId);
+                e.preventDefault();
+            };
+
+            progressBar.onpointermove = function(e) {
+                if (!isSeeking) return;
+                seekToPosition(e.clientX);
+                e.preventDefault();
+            };
+
+            progressBar.onpointerup = function(e) {
+                isSeeking = false;
+                progressBar.releasePointerCapture?.(e.pointerId);
+            };
+
+            progressBar.onpointercancel = function(e) {
+                isSeeking = false;
+                progressBar.releasePointerCapture?.(e.pointerId);
+            };
+
+            progressBar.ontouchstart = function(e) {
+                const touch = e.touches && e.touches[0];
+                if (touch) {
+                    seekToPosition(touch.clientX);
+                }
+                e.preventDefault();
+            };
+
+            progressBar.ontouchmove = function(e) {
+                const touch = e.touches && e.touches[0];
+                if (touch) {
+                    seekToPosition(touch.clientX);
+                }
+                e.preventDefault();
+            };
+        }
         
-        // Reset progress
+        // Reset progress только если сохраненной позиции нет
         if (progressFill) {
-            progressFill.style.width = '0%';
+            if (!getSavedAudioProgress(lesson.content)) {
+                progressFill.style.width = '0%';
+            }
         }
         
         currentPlayPauseBtn = playPauseBtn;
@@ -814,15 +895,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function playAudio(audioSrc, button, playPauseBtn, title) {
-        // Остановить текущее аудио
-        stopAllAudio();
-        
         const audioElement = document.getElementById('audioElement');
+        const normalizedSrc = new URL(audioSrc, window.location.href).href;
+        const isSameAudio = audioElement.src === normalizedSrc || audioElement.src.endsWith(audioSrc);
         
-        // Если это другой файл, загрузить его
-        if (audioElement.src !== audioSrc && !audioElement.src.endsWith(audioSrc)) {
+        // Останавливаем только если запускается другой файл
+        if (!isSameAudio) {
+            stopAllAudio();
+        }
+        
+        // Если это другой файл, загрузить его и восстановить позицию
+        if (!isSameAudio) {
             audioElement.src = audioSrc;
             audioElement.load();
+            const savedProgress = getSavedAudioProgress(audioSrc);
+            if (savedProgress > 0) {
+                audioElement.addEventListener('loadedmetadata', function handleRestore() {
+                    audioElement.currentTime = Math.min(savedProgress, audioElement.duration || savedProgress);
+                    audioElement.removeEventListener('loadedmetadata', handleRestore);
+                });
+            }
         }
         
         // Обновить состояние кнопки
@@ -886,60 +978,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 bar.style.animationPlayState = 'paused';
             });
         }
-    }
-    
-    function stopAllAudio() {
-        const audioElement = document.getElementById('audioElement');
-        if (audioElement) {
-            audioElement.pause();
-            audioElement.currentTime = 0;
-        }
-        
-        if (currentAudio) {
-            isAudioPlaying = false;
-            currentAudio = null;
-        }
-        
-        // Сбросить все кнопки воспроизведения
-        if (currentPlayPauseBtn) {
-            currentPlayPauseBtn.classList.remove('playing');
-            currentPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        }
-        
-        if (currentAudioButton) {
-            // Проверить, является ли это кнопкой objection
-            if (currentAudioButton.classList.contains('objection-play-btn')) {
-                const icon = currentAudioButton.querySelector('i');
-                if (icon) {
-                    icon.className = 'fas fa-play';
-                }
-                currentAudioButton.style.background = 'rgba(124, 58, 237, 0.2)';
-                currentAudioButton.style.color = 'var(--primary)';
-            } else {
-                currentAudioButton.classList.remove('playing');
-                currentAudioButton.innerHTML = '<i class="fas fa-play"></i>';
-            }
-        }
-        
-        // Сбросить все кнопки воспроизведения в интерфейсе objections
-        document.querySelectorAll('.objection-play-btn').forEach(btn => {
-            const icon = btn.querySelector('i');
-            if (icon) {
-                icon.className = 'fas fa-play';
-            }
-            btn.style.background = 'rgba(124, 58, 237, 0.2)';
-            btn.style.color = 'var(--primary)';
-        });
-        
-        // Остановить анимацию волн
-        const waveBars = document.querySelectorAll('.wave-bar');
-        waveBars.forEach(bar => {
-            bar.style.animationPlayState = 'paused';
-            bar.style.height = '20px';
-        });
-        
-        currentAudioButton = null;
-        currentPlayPauseBtn = null;
     }
     
     function toggleMute() {
@@ -1077,8 +1115,16 @@ document.addEventListener('DOMContentLoaded', function() {
         goToStage(1);
         tg.showAlert('Обучение начато заново! Удачи!');
     }
-    function stopAllAudio() {
+    function stopAllAudio(options = {}) {
+        const { resetProgress = false } = options;
         const audioElement = document.getElementById('audioElement');
+        if (audioElement && audioElement.src) {
+            if (resetProgress) {
+                clearSavedAudioProgress(audioElement.src);
+            } else {
+                saveAudioProgress(audioElement.src, audioElement.currentTime || 0);
+            }
+        }
         if (audioElement) {
             audioElement.pause();
             audioElement.currentTime = 0;
@@ -1132,6 +1178,48 @@ document.addEventListener('DOMContentLoaded', function() {
         
         currentAudioButton = null;
         currentPlayPauseBtn = null;
+    }
+
+    function getAudioProgressMap() {
+        try {
+            return JSON.parse(localStorage.getItem(AUDIO_PROGRESS_KEY) || '{}');
+        } catch (error) {
+            return {};
+        }
+    }
+
+    function normalizeAudioKey(audioSrc) {
+        if (!audioSrc) return '';
+        return audioSrc.startsWith('http') ? audioSrc : new URL(audioSrc, window.location.href).href;
+    }
+
+    function saveAudioProgress(audioSrc, currentTime) {
+        const key = normalizeAudioKey(audioSrc);
+        if (!key) return;
+        const progress = getAudioProgressMap();
+        progress[key] = Math.max(0, Number(currentTime) || 0);
+        localStorage.setItem(AUDIO_PROGRESS_KEY, JSON.stringify(progress));
+    }
+
+    function getSavedAudioProgress(audioSrc) {
+        const key = normalizeAudioKey(audioSrc);
+        if (!key) return 0;
+        const progress = getAudioProgressMap();
+        return Math.max(0, Number(progress[key]) || 0);
+    }
+
+    function clearSavedAudioProgress(audioSrc) {
+        const key = normalizeAudioKey(audioSrc);
+        if (!key) return;
+        const progress = getAudioProgressMap();
+        delete progress[key];
+        localStorage.setItem(AUDIO_PROGRESS_KEY, JSON.stringify(progress));
+    }
+
+    function persistCurrentAudioState() {
+        const audioElement = document.getElementById('audioElement');
+        if (!audioElement || !audioElement.src) return;
+        saveAudioProgress(audioElement.src, audioElement.currentTime || 0);
     }
     
     function handleBack() {
