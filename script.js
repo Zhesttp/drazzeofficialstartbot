@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 lessons: [
                     { id: 1, type: 'audio', title: "Обучение сетевому бизнесу / рекрутинг / база", description: "Тренинг Влада", content: "assets/audio/new/11-network-business-recruiting-base.mp3" },
                     { id: 2, type: 'audio', title: "Отказы в продажах", description: "Тренинг Влада по работе с отказами", content: "assets/audio/new/12-sales-objections.mp3" },
-                    { id: 3, type: 'audio', title: "Новички сливаются", description: "Тренинг от Влада", content: "assets/audio/Новички сливаются (online-audio-converter.com).mp3" },
+                    { id: 3, type: 'audio', title: "Новички сливаются", description: "Тренинг от Влада", content: "assets/audio/stage3/Новички сливаются (online-audio-converter.com).mp3" },
                     { id: 4, type: 'audio', title: "Система чатов в DRZ", description: "Как правильно и эффективно пользоваться чатами", content: "assets/audio/audio2/01-drazze-chats.mp3" },
                     { id: 5, type: 'audio', title: "Роль наставника в бизнесе", description: "Зачем нужен наставник и как с ним работать", content: "assets/audio/audio2/02-business-mentor.mp3" },
                     { id: 6, type: 'objections', title: "Блоки возражений", description: "Ответы в аудио на типовые возражения", objections: [
